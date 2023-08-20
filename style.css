@@ -64,3 +64,24 @@ table button:hover, input[type="submit"]:hover{
 table button:not(:first-child){
     background-color: green;
 }
+.content{
+    position: relative;
+}
+.loading{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px dotted red;
+    border-left: none;
+    border-top: none;
+    animation: load 2s infinite linear;
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    
+}
+@keyframes load {
+    100%{
+        transform: rotate(360deg);
+    }
+}

@@ -1,5 +1,5 @@
 let data = [];
-
+let isLoading = true;
 async function fetchData (){
     const response = await fetch("https://dummyjson.com/todos")
     const {todos} = await response.json()
@@ -9,11 +9,17 @@ async function fetchData (){
 
 
 fetchData().then(() => {
+    isLoading = false;
     fillTable()
 })
 
 function fillTable(){
-    let tbody = document.querySelector("table tbody")
+    let loader = document.querySelector(".loading");
+    if(isLoading)
+    null
+else 
+   { loader.style.display = "none";
+     let tbody = document.querySelector("table tbody")
     data.forEach((obj)=>{
         // console.log(obj)
         let id = obj.id;
@@ -40,5 +46,5 @@ function fillTable(){
         tbody.appendChild(tableRow)
     })
     let count = document.querySelector("table tfoot span")
-    count.innerHTML = data.length
+    count.innerHTML = data.length;}
 }
