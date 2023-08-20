@@ -55,6 +55,9 @@ table button, input[type="submit"]{
     cursor: pointer;
     color: white;
 }
+table button:first-child{
+    margin-right: 10px;
+}
 table button:hover, input[type="submit"]:hover{
     opacity: 0.6;
 }
