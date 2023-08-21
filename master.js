@@ -72,3 +72,20 @@ function done(){
     })
 }
 done()
+
+function deleteTask(){
+    document.addEventListener("click",(e)=>{
+        if(e.target.id == "delete"){
+            let rowId = e.target.dataset.id;
+            data.forEach((obj)=>{
+                if (obj.id == rowId){
+                    let indexToRemove = data.indexOf(obj)
+                    data.splice(indexToRemove,1)
+                }
+            })
+            clearTable();
+            fillTable(data)
+        }
+    })
+}
+deleteTask()
