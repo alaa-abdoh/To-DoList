@@ -89,3 +89,20 @@ function deleteTask(){
     })
 }
 deleteTask()
+// add task
+document.forms[0].onsubmit = (e)=>{
+    e.preventDefault();
+   let inputField = document.querySelector("form input:not(:last-child)").value;
+   if(inputField !== ""){
+    let newID = data[data.length - 1].id + 1;
+    let obj ={
+        id : newID,
+        todo : inputField,
+        completed : false
+    }
+    data.push(obj)
+    clearTable();
+    document.querySelector("form input:not(:last-child)").value = ""
+    fillTable(data)
+   }
+}
