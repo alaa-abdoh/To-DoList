@@ -80,15 +80,27 @@ done()
 function deleteTask(){
     document.addEventListener("click",(e)=>{
         if(e.target.id == "delete"){
-            let rowId = e.target.dataset.id;
-            data.forEach((obj)=>{
-                if (obj.id == rowId){
-                    let indexToRemove = data.indexOf(obj)
-                    data.splice(indexToRemove,1)
+            Swal.fire({
+                title: 'Cation!',
+                text: 'Are you sure you want continue delete this todo ?',
+                icon: 'warning',
+                footer: "Note: you cant undo this operation",
+                showDenyButton:true,
+                denyButtonText:"No",
+                confirmButtonText:"yes sure"
+              }).then((prom)=>{
+                if(prom.isConfirmed == true){
+                    let rowId = e.target.dataset.id;
+                    data.forEach((obj)=>{
+                        if (obj.id == rowId){
+                            let indexToRemove = data.indexOf(obj)
+                            data.splice(indexToRemove,1)
+                        }
+                    })
+                    clearTable();
+                    fillTable(data)
                 }
-            })
-            clearTable();
-            fillTable(data)
+              })
         }
     })
 }
