@@ -1,10 +1,10 @@
 let data = [];
 let query = (document.querySelector("input:first-child:last-child").value).toLowerCase()
 let isLoading = true;
+
 async function fetchData (){
     const response = await fetch("https://dummyjson.com/todos")
     const {todos} = await response.json()
-
     data = todos;
 }
 
@@ -19,7 +19,10 @@ function fillTable(givenData){
     if(isLoading)
     null
 else 
-   {let filterdData = givenData.filter((obj)=>{
+   {
+    if(window.localStorage.getItem("list"))
+        givenData = JSON.parse(window.localStorage.getItem("list"))
+    let filterdData = givenData.filter((obj)=>{
     return obj.todo.toLowerCase().includes(query)
     }) 
     loader.style.display = "none";
@@ -70,6 +73,7 @@ function done(){
                     obj.completed ? obj.completed = false : obj.completed = true
                 }
             })
+            window.localStorage.setItem("list",JSON.stringify(data))
             clearTable();
             fillTable(data)
         }
@@ -97,6 +101,7 @@ function deleteTask(){
                             data.splice(indexToRemove,1)
                         }
                     })
+                    window.localStorage.setItem("list",JSON.stringify(data))
                     clearTable();
                     fillTable(data)
                 }
@@ -117,21 +122,11 @@ document.forms[0].onsubmit = (e)=>{
         completed : false
     }
     data.push(obj)
+    window.localStorage.setItem("list",JSON.stringify(data))
     clearTable();
     document.querySelector("form input:not(:last-child)").value = ""
     fillTable(data)
    }
-}
-function search(){ 
-    let arr = []  
-    let value = (document.querySelector("input:first-child:last-child").value).toLowerCase()
-    data.forEach((obj)=>{
-        if(obj.todo.toLowerCase().includes(value))
-            arr.push(obj)
-    })
-    clearTable();    
-    fillTable(arr)
-    
 }
  document.querySelector("input:first-child:last-child").oninput = ()=>{
     query = (document.querySelector("input:first-child:last-child").value).toLowerCase();
