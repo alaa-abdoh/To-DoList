@@ -1,4 +1,5 @@
 let data = [];
+let query = (document.querySelector("input:first-child:last-child").value).toLowerCase()
 let isLoading = true;
 async function fetchData (){
     const response = await fetch("https://dummyjson.com/todos")
@@ -18,9 +19,12 @@ function fillTable(givenData){
     if(isLoading)
     null
 else 
-   { loader.style.display = "none";
+   {let filterdData = givenData.filter((obj)=>{
+    return obj.todo.toLowerCase().includes(query)
+    }) 
+    loader.style.display = "none";
      let tbody = document.querySelector("table tbody")
-     givenData.forEach((obj)=>{
+     filterdData.forEach((obj)=>{
         // console.log(obj)
         let id = obj.id;
         let description = obj.todo;
@@ -49,7 +53,7 @@ else
         tbody.appendChild(tableRow)
     })
     let count = document.querySelector("table tfoot span")
-    count.innerHTML = givenData.length;}
+    count.innerHTML = filterdData.length;}
 }
 
 //**************************************************
@@ -106,3 +110,19 @@ document.forms[0].onsubmit = (e)=>{
     fillTable(data)
    }
 }
+function search(){ 
+    let arr = []  
+    let value = (document.querySelector("input:first-child:last-child").value).toLowerCase()
+    data.forEach((obj)=>{
+        if(obj.todo.toLowerCase().includes(value))
+            arr.push(obj)
+    })
+    clearTable();    
+    fillTable(arr)
+    
+}
+ document.querySelector("input:first-child:last-child").oninput = ()=>{
+    query = (document.querySelector("input:first-child:last-child").value).toLowerCase();
+    clearTable();
+    fillTable(data)
+ }
