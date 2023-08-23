@@ -6,6 +6,8 @@ async function fetchData (){
     const response = await fetch("https://dummyjson.com/todos")
     const {todos} = await response.json()
     data = todos;
+    if(window.localStorage.getItem("list"))
+        data = JSON.parse(window.localStorage.getItem("list"));
 }
 
 
@@ -20,8 +22,6 @@ function fillTable(givenData){
     null
 else 
    {
-    if(window.localStorage.getItem("list"))
-        givenData = JSON.parse(window.localStorage.getItem("list"))
     let filterdData = givenData.filter((obj)=>{
     return obj.todo.toLowerCase().includes(query)
     }) 
