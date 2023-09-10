@@ -119,7 +119,8 @@ document.forms[0].onsubmit = (e)=>{
     let obj ={
         id : newID,
         todo : inputField,
-        completed : false
+        completed : false,
+        userId : Math.floor((Math.random() *50) + 1) 
     }
     data.push(obj)
     window.localStorage.setItem("list",JSON.stringify(data))
