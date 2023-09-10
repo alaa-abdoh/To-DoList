@@ -127,6 +127,15 @@ document.forms[0].onsubmit = (e)=>{
     document.querySelector("form input:not(:last-child)").value = ""
     fillTable(data)
    }
+   else {
+    Swal.fire({
+        title: 'Warning!',
+        text: 'You cant add empty task',
+        icon: 'warning',
+        showDenyButton:false,
+        confirmButtonText:"OK"
+      })
+   }
 }
  document.querySelector("input:first-child:last-child").oninput = ()=>{
     query = (document.querySelector("input:first-child:last-child").value).toLowerCase();
