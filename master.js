@@ -114,7 +114,7 @@ deleteTask()
 document.forms[0].onsubmit = (e)=>{
     e.preventDefault();
    let inputField = document.querySelector("form input:not(:last-child)").value;
-   if(inputField !== ""){
+   if(inputField !== "" && ! inputField.startsWith(" ")){
     let newID = data[data.length - 1].id + 1;
     let obj ={
         id : newID,
