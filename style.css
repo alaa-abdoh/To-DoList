@@ -25,6 +25,11 @@ table{
     margin: 30px auto;
     border-spacing: 0;
 }
+.description{
+    max-width: 330px;
+    width: 330px;
+    overflow: hidden;
+}
 table th{
     background-color: #d1cdcd;
     font-size: 25px;

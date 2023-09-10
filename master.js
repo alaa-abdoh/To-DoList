@@ -39,6 +39,10 @@ else
             let td = document.createElement("td");
             let text = document.createTextNode(arr[i])
             td.appendChild(text);
+            if(arr[i] == description){
+                td.classList.add("description")
+                td.setAttribute("title", description)
+            }
             tableRow.appendChild(td)
         }
         let deleteBtn = document.createElement("button");
