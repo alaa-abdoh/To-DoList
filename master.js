@@ -52,7 +52,9 @@ else
         let doneBtn = document.createElement("button");
         doneBtn.id = "done"
         doneBtn.dataset.id = obj.id;
-        doneBtn.appendChild(document.createTextNode("Done"))
+        if(obj.completed)
+            doneBtn.appendChild(document.createTextNode("Undo"))
+        else doneBtn.appendChild(document.createTextNode("Done")) 
         let td = document.createElement("td");
         td.append(deleteBtn, doneBtn)
         tableRow.appendChild(td)
@@ -74,7 +76,7 @@ function done(){
             let rowId = e.target.dataset.id;
             data.forEach((obj)=>{
                 if (obj.id == rowId){
-                    obj.completed ? obj.completed = false : obj.completed = true
+                    obj.completed ? obj.completed = false : obj.completed = true;
                 }
             })
             window.localStorage.setItem("list",JSON.stringify(data))
