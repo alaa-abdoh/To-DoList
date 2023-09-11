@@ -32,7 +32,7 @@ else
         let id = obj.id;
         let description = obj.todo;
         let userID = obj.userId;
-        let status = obj.completed ? "comleted" : "pending"
+        let status = obj.completed ? "completed" : "pending"
         let tableRow = document.createElement("tr")
         let arr = [id, description, userID, status];
         for(let i=0; i<4; i++){
