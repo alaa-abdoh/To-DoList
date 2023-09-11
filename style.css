@@ -21,8 +21,8 @@ table button:first-child{
     background-color: red;
 }
 table{
-    width: 88%;
-    margin: 30px auto;
+    width: 100%;
+    margin: 30px 0;
     border-spacing: 0;
 }
 .description{
@@ -71,6 +71,10 @@ table button:not(:first-child){
 }
 .content{
     position: relative;
+    max-height: 600px;
+    overflow-y: auto;
+    max-width: 90%;
+    margin: 0 auto;
 }
 .loading{
     width: 60px;
