@@ -61,7 +61,7 @@ else
         obj.completed ? tableRow.style.background = "#cccccc3d": null
         tbody.appendChild(tableRow)
     })
-    let count = document.querySelector("table tfoot span")
+    let count = document.querySelector(".count span")
     count.innerHTML = filterdData.length;}
 }
 

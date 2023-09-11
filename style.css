@@ -43,15 +43,6 @@ table tbody td{
     border-bottom: 1px solid #ddd;
     padding: 10px;
 }
-table tfoot tr td{
-    text-align: center;
-    font-size: 20px;
-    padding: 10px;
-}
-table tfoot span{
-    font-size: 22px;
-    font-weight: bold;
-}
 table button, input[type="submit"]{
     padding: 8px;
     width: 70px;
@@ -75,6 +66,11 @@ table button:not(:first-child){
     overflow-y: auto;
     max-width: 90%;
     margin: 0 auto;
+}
+.count{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
 }
 .loading{
     width: 60px;
