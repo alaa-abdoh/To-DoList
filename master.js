@@ -11,10 +11,12 @@ async function fetchData (){
 }
 
 
-fetchData().then(() => {
-    isLoading = false;
-    fillTable(data)
-})
+window.onload = ()=>{
+    fetchData().then(() => {
+        isLoading = false;
+        fillTable(data)
+    })
+}
 
 function fillTable(givenData){
     let loader = document.querySelector(".loading");
