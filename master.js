@@ -20,36 +20,35 @@ window.onload = ()=>{
 
 function fillTable(givenData){
     let loader = document.querySelector(".loading");
-    if(isLoading)
-    null
-else 
-   {
-    let filterdData = givenData.filter((obj)=>{
-    return obj.todo.toLowerCase().includes(query)
-    }) 
-    loader.style.display = "none";
-     let tbody = document.querySelector("table tbody")
-     
-     filterdData.forEach((obj)=>{
-         let template = document.querySelector("#tableRow");
-        const clone = template.content.cloneNode(true);
-        let tds = clone.querySelectorAll("td");
-        let tr = clone.querySelector("tr");
-        tds[0].textContent = obj.id;
-        tds[1].textContent = obj.todo;
-        tds[1].setAttribute("title", obj.todo)
-        tds[2].textContent = obj.userId;
-        tds[4].dataset.id = obj.id;
-        if (obj.completed) {
-            tr.classList.add("completedTask");
-            tds[3].textContent = "completed";
-        } else {
-            tds[3].textContent = "pending";
-        }     
-        tbody.appendChild(tr)
-    })
-    let count = document.querySelector(".count span")
-    count.innerHTML = filterdData.length;}
+    if(!isLoading){
+        let filterdData = givenData.filter((obj)=>{
+        return obj.todo.toLowerCase().includes(query)
+        }) 
+        loader.style.display = "none";
+            let tbody = document.querySelector("table tbody")
+            
+            filterdData.forEach((obj)=>{
+                let template = document.querySelector("#tableRow");
+            const clone = template.content.cloneNode(true);
+            let tds = clone.querySelectorAll("td");
+            let tr = clone.querySelector("tr");
+            tds[0].textContent = obj.id;
+            tds[1].textContent = obj.todo;
+            tds[1].setAttribute("title", obj.todo)
+            tds[2].textContent = obj.userId;
+            tds[4].dataset.id = obj.id;
+            if (obj.completed) {
+                tr.classList.add("completedTask");
+                tds[3].textContent = "completed";
+            } else {
+                tds[3].textContent = "pending";
+            }     
+            tbody.appendChild(tr)
+        })
+        let count = document.querySelector(".count span")
+        count.innerHTML = filterdData.length;
+    }
+    
 }
 
 //**************************************************
