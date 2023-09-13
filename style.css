@@ -60,6 +60,9 @@ table button:hover, input[type="submit"]:hover{
 table button:not(:first-child){
     background-color: green;
 }
+.completedTask{
+    background-color: #eee;
+}
 .content{
     position: relative;
     max-height: 600px;

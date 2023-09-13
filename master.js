@@ -27,39 +27,24 @@ else
     }) 
     loader.style.display = "none";
      let tbody = document.querySelector("table tbody")
+     
      filterdData.forEach((obj)=>{
-        // console.log(obj)
-        let id = obj.id;
-        let description = obj.todo;
-        let userID = obj.userId;
-        let status = obj.completed ? "completed" : "pending"
-        let tableRow = document.createElement("tr")
-        let arr = [id, description, userID, status];
-        for(let i=0; i<4; i++){
-            let td = document.createElement("td");
-            let text = document.createTextNode(arr[i])
-            td.appendChild(text);
-            if(arr[i] == description){
-                td.classList.add("description")
-                td.setAttribute("title", description)
-            }
-            tableRow.appendChild(td)
-        }
-        let deleteBtn = document.createElement("button");
-        deleteBtn.id = "delete"
-        deleteBtn.dataset.id = obj.id;
-        deleteBtn.appendChild(document.createTextNode("Delete"))
-        let doneBtn = document.createElement("button");
-        doneBtn.id = "done"
-        doneBtn.dataset.id = obj.id;
-        if(obj.completed)
-            doneBtn.appendChild(document.createTextNode("Undo"))
-        else doneBtn.appendChild(document.createTextNode("Done")) 
-        let td = document.createElement("td");
-        td.append(deleteBtn, doneBtn)
-        tableRow.appendChild(td)
-        obj.completed ? tableRow.style.background = "#cccccc3d": null
-        tbody.appendChild(tableRow)
+         let template = document.querySelector("#tableRow");
+        const clone = template.content.cloneNode(true);
+        let tds = clone.querySelectorAll("td");
+        let tr = clone.querySelector("tr");
+        tds[0].textContent = obj.id;
+        tds[1].textContent = obj.todo;
+        tds[1].setAttribute("title", obj.todo)
+        tds[2].textContent = obj.userId;
+        tds[4].dataset.id = obj.id;
+        if (obj.completed) {
+            tr.classList.add("completedTask");
+            tds[3].textContent = "completed";
+        } else {
+            tds[3].textContent = "pending";
+        }     
+        tbody.appendChild(tr)
     })
     let count = document.querySelector(".count span")
     count.innerHTML = filterdData.length;}
@@ -73,10 +58,11 @@ function clearTable(){
 function done(){
     document.addEventListener("click",(e)=>{
         if(e.target.id == "done"){
-            let rowId = e.target.dataset.id;
+            let rowId = e.target.parentElement.dataset.id;
             data.forEach((obj)=>{
                 if (obj.id == rowId){
                     obj.completed ? obj.completed = false : obj.completed = true;
+                    e.target.parentElement.parentElement.classList.toggle("completedTak")
                 }
             })
             window.localStorage.setItem("list",JSON.stringify(data))
@@ -100,7 +86,7 @@ function deleteTask(){
                 confirmButtonText:"yes sure"
               }).then((prom)=>{
                 if(prom.isConfirmed == true){
-                    let rowId = e.target.dataset.id;
+                    let rowId = e.target.parentElement.dataset.id;
                     data.forEach((obj)=>{
                         if (obj.id == rowId){
                             let indexToRemove = data.indexOf(obj)
