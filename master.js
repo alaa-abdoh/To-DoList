@@ -25,57 +25,57 @@ function fillTable(givenData){
         return obj.todo.toLowerCase().includes(query)
         }) 
         loader.style.display = "none";
-            let tbody = document.querySelector("table tbody")
             
             filterdData.forEach((obj)=>{
-                let template = document.querySelector("#tableRow");
-            const clone = template.content.cloneNode(true);
-            let tds = clone.querySelectorAll("td");
-            let tr = clone.querySelector("tr");
-            tds[0].textContent = obj.id;
-            tds[1].textContent = obj.todo;
-            tds[1].setAttribute("title", obj.todo)
-            tds[2].textContent = obj.userId;
-            tds[4].dataset.id = obj.id;
-            if (obj.completed) {
-                tr.classList.add("completedTask");
-                tds[3].textContent = "completed";
-            } else {
-                tds[3].textContent = "pending";
-            }     
-            tbody.appendChild(tr)
+                createRowClone(obj)
         })
         let count = document.querySelector(".count span")
         count.innerHTML = filterdData.length;
     }
     
 }
-
+function createRowClone(obj){
+    let tbody = document.querySelector("table tbody")
+    let template = document.querySelector("#tableRow");
+    const clone = template.content.cloneNode(true);
+    let tds = clone.querySelectorAll("td");
+    let tr = clone.querySelector("tr");
+    tds[0].textContent = obj.id;
+    tds[1].textContent = obj.todo;
+    tds[1].setAttribute("title", obj.todo)
+    tds[2].textContent = obj.userId;
+    tds[4].dataset.id = obj.id;
+    if (obj.completed) {
+        tr.classList.add("completedTask");
+        tds[3].textContent = "completed";
+    } else {
+        tds[3].textContent = "pending";
+    }     
+    tbody.appendChild(tr)
+}
 //**************************************************
+document.addEventListener("click", (e) => {
+    if (e.target.id === "done") {
+        const rowId = e.target.parentElement.dataset.id;
+        done(rowId); 
+    }
+});
 function clearTable(){
     let tbody = document.querySelector("table tbody")
     tbody.innerHTML = ""
 }
-function done(){
-    document.addEventListener("click",(e)=>{
-        if(e.target.id == "done"){
-            let rowId = e.target.parentElement.dataset.id;
-            data.forEach((obj)=>{
-                if (obj.id == rowId){
-                    obj.completed ? obj.completed = false : obj.completed = true;
-                    e.target.parentElement.parentElement.classList.toggle("completedTak")
-                }
-            })
-            window.localStorage.setItem("list",JSON.stringify(data))
-            clearTable();
-            fillTable(data)
-        }
-    })
-}
-done()
+function done(todoId) {
+    const todoItemIndex = data.findIndex((obj) => obj.id == todoId);
+    data[todoItemIndex].completed = !data[todoItemIndex].completed;
 
-function deleteTask(){
-    document.addEventListener("click",(e)=>{
+    const row = document.querySelector(`[data-id="${todoId}"]`).parentElement;
+    row.classList.toggle("completedTask");
+    let statusTd = row.querySelector("td:nth-child(4)")
+    if(data[todoItemIndex].completed) statusTd.innerHTML="completed"
+    else statusTd.innerHTML="pending"
+    window.localStorage.setItem("list", JSON.stringify(data));    
+}
+document.addEventListener("click",(e)=>{
         if(e.target.id == "delete"){
             Swal.fire({
                 title: 'Cation!',
@@ -88,21 +88,18 @@ function deleteTask(){
               }).then((prom)=>{
                 if(prom.isConfirmed == true){
                     let rowId = e.target.parentElement.dataset.id;
-                    data.forEach((obj)=>{
-                        if (obj.id == rowId){
-                            let indexToRemove = data.indexOf(obj)
-                            data.splice(indexToRemove,1)
-                        }
-                    })
-                    window.localStorage.setItem("list",JSON.stringify(data))
-                    clearTable();
-                    fillTable(data)
+                    deleteTask(rowId)
                 }
               })
         }
     })
+function deleteTask(todoId){
+    let index = data.findIndex((obj)=> obj.id == todoId);
+    data.splice(index, 1);
+    const row = document.querySelector(`[data-id="${todoId}"]`).parentElement;
+    row.remove()
+    window.localStorage.setItem("list",JSON.stringify(data))
 }
-deleteTask()
 // add task
 document.forms[0].onsubmit = (e)=>{
     e.preventDefault();
@@ -116,10 +113,9 @@ document.forms[0].onsubmit = (e)=>{
         userId : Math.floor((Math.random() *50) + 1) 
     }
     data.push(obj)
+    createRowClone(obj)
     window.localStorage.setItem("list",JSON.stringify(data))
-    clearTable();
     document.querySelector("form input:not(:last-child)").value = ""
-    fillTable(data)
    }
    else {
     Swal.fire({
@@ -131,7 +127,7 @@ document.forms[0].onsubmit = (e)=>{
       })
    }
 }
- document.querySelector("input:first-child:last-child").oninput = ()=>{
+function filter(){
     query = (document.querySelector("input:first-child:last-child").value).toLowerCase();
     clearTable();
     fillTable(data)
