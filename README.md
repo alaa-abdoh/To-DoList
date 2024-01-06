@@ -1,5 +1,5 @@
 # ToDo list App
-Deploy Link: [/](https://to-do-list-orpin-delta.vercel.app/)
+Deploy Link: https://to-do-list-orpin-delta.vercel.app/
 
 Skills:HTML, CSS, JS
 
